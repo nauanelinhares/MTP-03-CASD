@@ -17,7 +17,7 @@ Antes de rodar o código:
 class BotAlberto:
     #Não precisa saber disso, mas é tipo um constructor que constroí o bot
     def __init__(self):
-        self.driver_path = executable_path="C:/Users/Nauvo/Documents/Teste/Python/MTP-03/chromedriver.exe"
+        self.driver_path = executable_path="C:/Users/Nauvo/Documents/Teste/Python/MTP-03/chromedriver.exe" # ATENÇÃO!!! MUDE O DIRETÓRIO CASO NÃO RODE!
         self.options = webdriver.ChromeOptions()
         self.options.add_argument("--user-data-dir=/home/username/.config/google-chrome")
         self.chrome =webdriver.Chrome(
@@ -34,12 +34,14 @@ class BotAlberto:
         #Acessa um site, no caso o site do whatsapp
         self.chrome.get('https://web.whatsapp.com/')
 
-    """Procura um usuario com base no seu nome"""
+    """Procura um usuario com base no seu nome na barra de pesquisa e acessa caso ache o usuario (Poderia ser um numero também"""
     def ProcuraUsuario(self,usuario):
         self.usuarioAtual = usuario
         sleep(5)
+        barraDeTexto = self.chrome.find_elements_by_xpath('//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
+        barraDeTexto[0].click()
+        barraDeTexto[0].send_keys(f'{usuario}')
         clicarPessoa = self.chrome.find_element_by_xpath(f"//span[@title='{usuario}']") #Procura o nome de uma pessoa
-        
         clicarPessoa.click() # Acessa o contato dessa pessoa
         
     """Envia uma mensagem inicial ao usuário"""
@@ -63,17 +65,22 @@ class BotAlberto:
             sleep(5)
             
             #Procura as mensagens do contato
-            mensagem = self.chrome.find_elements_by_xpath('//div[contains(@class,"GDTQm message-in focusable-list-item")]')
+            try:
+                mensagem = self.chrome.find_elements_by_xpath('//div[contains(@class,"GDTQm message-in focusable-list-item")]')
 
 
-            #Perceba que mensagem é um vetor, pois há várias mensagens, nesse caso vou acessar a última mensagem, o último termo do vetor
-            texto = mensagem[len(mensagem)-1] #Lembrando que o vetor começa sempre no zero, então pegamos o total de mensagens e diminuimos de 1.
-            #Acessa o conteúdo da mensagem
-            conteudoTexto = texto.find_elements_by_class_name("_3-8er")[0].text
-            #Acessa a barra de texto (região onde vou mandar a mensagem)
-            barraDeTexto = self.chrome.find_elements_by_xpath('//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
+                #Perceba que mensagem é um vetor, pois há várias mensagens, nesse caso vou acessar a última mensagem, o último termo do vetor
+                texto = mensagem[len(mensagem)-1] #Lembrando que o vetor começa sempre no zero, então pegamos o total de mensagens e diminuimos de 1.
+                #Acessa o conteúdo da mensagem
+                procurandoElemento = texto.find_elements_by_class_name("_3-8er")
+                conteudoTexto = procurandoElemento[len(procurandoElemento)-1].text
+                print(f'{conteudoTexto}')
+                #Acessa a barra de texto (região onde vou mandar a mensagem)
+                barraDeTexto = self.chrome.find_elements_by_xpath('//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
 
-
+            except:
+                whatsapp.procuraMensagemEEnviarMensagem()
+            
             #Responde com base na última resposta do usuário
             if conteudoTexto.isdigit() and self.jaRespondeu == 0:
                 barraDeTexto[1].click()
@@ -120,9 +127,9 @@ class BotAlberto:
 if __name__ == '__main__':
     whatsapp = BotAlberto()
     whatsapp.AcessSite()
-    sleep(10)
+    sleep(20)
     #Envia mensagens iniciais para esses usuarios
-    lista = ["Ratao"] #Cuidado, depende do nome que o usuário está no whatsapp
+    lista = ["Bastão Mitogay"] #Cuidado, depende do nome que o usuário está no whatsapp
     for i in lista:
         
         whatsapp.ProcuraUsuario(i)
