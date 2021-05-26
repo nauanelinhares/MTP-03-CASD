@@ -66,6 +66,22 @@ Para utilizar o **Alberto Bot** você irá precisar:
           <b>Emmanuel Dias (MM - T24) </b>
         </sub>
       </a>
+   </td>
+    <td align="center">
+      <a href="#">
+        <img src="https://pps.whatsapp.net/v/t61.24694-24/157775063_282490956727117_4283636313006254866_n.jpg?ccb=11-4&oh=9545b445092c7fa41951e7143881384f&oe=60B391D0" width="100px;" alt="Emmanuel Dias"/><br>
+        <sub>
+          <b>Tiago Asmann (Volvo - T24) </b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#">
+        <img src="https://pps.whatsapp.net/v/t61.24694-24/160115816_492271362224538_5753197858338450372_n.jpg?ccb=11-4&oh=680ac810a4743655457c9c0e6743c19f&oe=60B2A41A" width="100px;" alt="Emmanuel Dias"/><br>
+        <sub>
+          <b>Ana Beatriz (Wiki - T24) </b>
+        </sub>
+      </a>
     </td>
   </tr>
 </table>
