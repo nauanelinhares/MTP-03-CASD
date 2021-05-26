@@ -10,7 +10,7 @@
 
 Facilitar e diminuir o trabalho dos voluntários do CASD, principalmente no final do ano com vestibulinhos e entrevistas socioeconômicas.
 
-## Como Utilizar
+## ⚠️ Como Utilizar
 
 Para utilizar o **Alberto Bot** você irá precisar: 
 
@@ -28,4 +28,46 @@ Para utilizar o **Alberto Bot** você irá precisar:
 
 ### Enviar Mensagem personalizadas
 
+* Personalizar mensagens enviando emoctions
+
+   >Para utilizar os emoctions você deve utilizar o site [Emoctions](https://unicode-table.com/pt/emoji/)!
+  
+   >Na área de escrever a mensagem, para enviar um emoction você deve pegar o número do emoction e escrever u'\u"numeroDoEmoction'
+   
+   >Exemplo: mensagem.send_keys('Você transformou 10 vidas! Muito obrigado u'\u2764'!) # Onde 2764 representa o emoction do coração.
+
 ### Enviar Mensagem com base na resposta do Usuário
+
+
+## 🌈 Autores
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="#">
+        <img src="https://pps.whatsapp.net/v/t61.24694-24/153516526_331372361619306_860743845259846174_n.jpg?ccb=11-4&oh=c0f0a39d8c34c27966ce0eb07e8686ac&oe=60B2AA03" width="100px;" alt="Foto do Nauane no Whatsapp"/><br>
+        <sub>
+          <b>Nauane Linhares (Beta - T24) </b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#">
+        <img src="https://pps.whatsapp.net/v/t61.24694-24/118558196_383299582853821_113741634934752037_n.jpg?ccb=11-4&oh=04da5f46c25d9a83bd252db8f600d8cf&oe=60B2DE4A" width="100px;" alt="Victor Bastos"/><br>
+        <sub>
+          <b>Victor Bastos (Bastão - T24)</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#">
+        <img src="https://pps.whatsapp.net/v/t61.24694-24/138644684_873520336549248_4198284055920503421_n.jpg?ccb=11-4&oh=139bebc130dfadb0d9d7c416974f4bcf&oe=60B3812D" width="100px;" alt="Emmanuel Dias"/><br>
+        <sub>
+          <b>Emmanuel Dias (MM - T24) </b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+
