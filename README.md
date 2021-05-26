@@ -39,7 +39,7 @@ Para utilizar o **Alberto Bot** você irá precisar:
 ### Enviar Mensagem com base na resposta do Usuário
 
 
-## 🌈 Autores
+## 🦄 Autores
 
 <table>
   <tr>
