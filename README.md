@@ -4,7 +4,7 @@
 
 
 
-Robô do whatsapp utilizado para receber e enviar mensagens personalizadas para o usuário
+:robot: Robô do whatsapp utilizado para receber e enviar mensagens personalizadas para o usuário
 
 ## Objetivo
 
@@ -18,6 +18,8 @@ Para utilizar o **Alberto Bot** você irá precisar:
 * Instalar algumas bibliotecas para o python como:
   * Selenium
   * Pandas
+  
+  Obs: Para instalar essa bibliotecas, basta abrir o promt de comando e escrever "pip install {biblioteca}". Exemplo: pip install selenium
 
 
 ## Funções do Alberto Bot
