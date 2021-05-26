@@ -53,7 +53,7 @@ Para utilizar o **Alberto Bot** você irá precisar:
     </td>
     <td align="center">
       <a href="#">
-        <img src="https://pps.whatsapp.net/v/t61.24694-24/118558196_383299582853821_113741634934752037_n.jpg?ccb=11-4&oh=04da5f46c25d9a83bd252db8f600d8cf&oe=60B2DE4A" width="100px;" alt="Victor Bastos"/><br>
+        <img src="https://pps.whatsapp.net/v/t61.24694-24/118558196_383299582853821_113741634934752037_n.jpg?ccb=11-4&oh=04da5f46c25d9a83bd252db8f600d8cf&oe=60B2DE4A" width="100px;" alt="https://classroom.google.com/u/0/c/MjQzMTQ3Mzk0NDda/m/NjM3NzEzMDk3MTla/details"/><br>
         <sub>
           <b>Victor Bastos (Bastão - T24)</b>
         </sub>
