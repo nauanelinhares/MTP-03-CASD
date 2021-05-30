@@ -129,7 +129,11 @@ if __name__ == '__main__':
     whatsapp.AcessSite()
     sleep(20)
     #Envia mensagens iniciais para esses usuarios
+<<<<<<< HEAD
     lista = ["Flexão T24"] #Cuidado, depende do nome que o usuário está no whatsapp
+=======
+    lista = ["Bastão"] #Cuidado, depende do nome que o usuário está no whatsapp
+>>>>>>> 32c700067d651c76af5caaa7651c224ae06823ce
     for i in lista:
         
         whatsapp.ProcuraUsuario(i)
