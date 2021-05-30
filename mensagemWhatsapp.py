@@ -17,7 +17,7 @@ Antes de rodar o código:
 class BotAlberto:
     #Não precisa saber disso, mas é tipo um constructor que constroí o bot
     def __init__(self):
-        self.driver_path = executable_path="C:/Users/Nauvo/Documents/Teste/Python/MTP-03/chromedriver.exe" # ATENÇÃO!!! MUDE O DIRETÓRIO CASO NÃO RODE!
+        self.driver_path = executable_path="C:/Users/Nauvo/Documents/Teste/Python/MTP-03/MTP-03-CASD/chromedriver.exe" # ATENÇÃO!!! MUDE O DIRETÓRIO CASO NÃO RODE!
         self.options = webdriver.ChromeOptions()
         self.options.add_argument("--user-data-dir=/home/username/.config/google-chrome")
         self.chrome =webdriver.Chrome(
@@ -52,7 +52,7 @@ class BotAlberto:
             barraDeTexto[1].click()
             
             #Manda uma mensagem na barra de texto, dentro da send_keys é basicamente a mensagem que você quer mandar
-            barraDeTexto[1].send_keys(f'Olá {usuario}, digite o numero de vidas que você quer transformar')
+            barraDeTexto[1].send_keys(f'Olá {usuario}, digite o numero de vidas que você quer transformar (y)', u'\u2764')
             
             #Procura a setinha de enviar a mensagem e clica nela
             mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
@@ -129,7 +129,7 @@ if __name__ == '__main__':
     whatsapp.AcessSite()
     sleep(20)
     #Envia mensagens iniciais para esses usuarios
-    lista = ["Bastão Mitogay"] #Cuidado, depende do nome que o usuário está no whatsapp
+    lista = ["Flexão T24"] #Cuidado, depende do nome que o usuário está no whatsapp
     for i in lista:
         
         whatsapp.ProcuraUsuario(i)
