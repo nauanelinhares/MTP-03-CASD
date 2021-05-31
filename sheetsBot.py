@@ -1,17 +1,19 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
+from selenium.webdriver.common.keys import Keys
 scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name("casd-bot-1593e787a9bc.json", scope)
 client = gspread.authorize(creds)
 
-sheet = client.open("CASDBotTree").worksheet("TreeNoEmoji")
+sheet = client.open("CASDBotTree").worksheet("Membros")
 
 # Armazenar data da tabela
 nros   = sheet.col_values(1)
 emojis = sheet.col_values(2)
-textos = sheet.col_values(3)
+textos = sheet.col_values(3)[3:]
+diretores = sheet.col_values(4)[3:]
 opcoes = sheet.get('D:M')
+
 
 # Encontrar tamanhos pra evitar panes futuras
 size_nros   = len(nros)
@@ -20,6 +22,10 @@ size_opcoes = len(opcoes)
 # Primeira mensagem
 linha_nro = 3
 
+
+textinhos = [x.lower() for x in textos]
+mensagem = [x +Keys.SHIFT + Keys.ENTER for x in textos]
+"""
 while True:
     # Texto prinicipal da mensagem
     mensagem = '\n' + textos[linha_nro] 
@@ -47,3 +53,4 @@ while True:
         if nro == nros[i]:
             linha_nro = i
 
+"""
