@@ -1,4 +1,4 @@
-![Alberto BOT](https://pps.whatsapp.net/v/t61.24694-24/158591338_487302005761129_355164802960415134_n.jpg?ccb=11-4&oh=7c8ba9a6d1934627aa7fac0f8055ccee&oe=60B2604A)
+![Alberto BOT](https://raw.githubusercontent.com/nauvoador/MTP-03-CASD/main/158591338_487302005761129_355164802960415134_n.jpg)
 
 # Alberto BOT
 
