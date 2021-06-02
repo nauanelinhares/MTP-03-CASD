@@ -1,4 +1,4 @@
-# piki
+# Piki
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from time import sleep
@@ -23,10 +23,10 @@ class BotAlberto:
     # Não precisa saber disso, mas é tipo um constructor que constroí o bot
     def __init__(self):
         # ATENÇÃO!!! MUDE O DIRETÓRIO CASO NÃO RODE!
-        self.driver_path = executable_path = "C:/Users/Nauvo/Documents/Teste/Python/MTP-03/MTP-03-CASD/chromedriver.exe"
+        self.driver_path = executable_path = "/usr/bin/chromedriver"
         self.options = webdriver.ChromeOptions()
         self.options.add_argument(
-            "--user-data-dir=/home/username/.config/google-chrome")
+            "/usr/bin/google-chrome")
         self.chrome = webdriver.Chrome(
             self.driver_path,
             options=self.options
@@ -44,6 +44,7 @@ class BotAlberto:
 
     """Procura um usuario com base no seu nome na barra de pesquisa e acessa caso ache o usuario (Poderia ser um numero também"""
 
+    # Revisar essa função para mudar o modo de procura de usuario
     def ProcuraUsuario(self, usuario):
         self.usuarioAtual = usuario
         sleep(5)
@@ -181,6 +182,30 @@ class BotAlberto:
             '//span[@data-icon="send"]')
         send_button.click()
 
+        "Envia figurinha ao usuário"
+
+    def enviarFigurinha(self):
+        emoji_section = self.chrome.find_element_by_xpath(
+            '//*[@id="main"]/footer/div[1]/div[1]/div[1]/button[2]/span'
+        )
+        emoji_section.click()
+        sleep(0.2)
+        sticker_section = self.chrome.find_element_by_xpath(
+            '//*[@id="main"]/footer/div[1]/div[1]/div[1]/button[4]/span'
+        )
+        sticker_section.click()
+        sleep(0.5)
+        favoritas_section = self.chrome.find_element_by_xpath(
+            '//*[@id="main"]/footer/div[2]/div/div[3]/div[1]/div/div[1]/div[1]/div/div/div[2]/span'
+        )
+        favoritas_section.click()
+        sleep(1)
+        figurinha = self.chrome.find_element_by_xpath(
+            '//*[@id="main"]/footer/div[2]/div/div[3]/div[1]/div/div[1]/div[2]/div/div[1]/div/span'
+        )
+        figurinha.click()
+        sleep(3)
+
     """ Encerra o bot"""
 
     def FinalizarBot(self):
@@ -193,12 +218,14 @@ if __name__ == '__main__':
     whatsapp.AcessSite()
     sleep(20)
     # Envia mensagens iniciais para esses usuarios
-    lista = ["Wiki"]  # Cuidado, depende do nome que o usuário está no whatsapp
+    # Cuidado, depende do nome que o usuário está no whatsapp
+    lista = ["Wiki 24"]
     for i in lista:
 
         whatsapp.ProcuraUsuario(i)
         whatsapp.MensagemInicial(i, (f'Olá {i}, eu sou o Alberto bot, tudo bem?', u'\u2764',
                                      ' Gostaria de conversar com algum dos nosso diretores? Escreva o Nome do departamento'))
+        whatsapp.enviarFigurinha()
     i = 0
 
     while i < 1:
