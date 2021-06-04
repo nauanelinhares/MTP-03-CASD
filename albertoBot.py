@@ -1,3 +1,4 @@
+import time
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from time import sleep
@@ -19,18 +20,18 @@ Antes de rodar o código:
 class BotAlberto:
     #Não precisa saber disso, mas é tipo um constructor que constroí o bot
     def __init__(self):
-        self.driver_path = executable_path="C:/Users/Nauvo/Documents/Teste/Python/MTP-03/MTP-03-CASD/chromedriver.exe" # ATENÇÃO!!! MUDE O DIRETÓRIO CASO NÃO RODE!
+        self.driver_path = executable_path="chromedriver.exe" # ATENÇÃO!!! MUDE O DIRETÓRIO CASO NÃO RODE!
         self.options = webdriver.ChromeOptions()
         self.options.add_argument("--user-data-dir=/home/username/.config/google-chrome")
         self.chrome =webdriver.Chrome(
             self.driver_path,
             options=self.options
         )
-
+        
         self.jaRespondeu = 0 # 0 = Não - 1 = Sim
-
+        self.mensagemSalva = None
         self.usuarioAtual = None # O usuario para o qual o bot está conectado
-
+        
     """Acessa um site, no caso do Alberto Bot, padroniza-se o whatsapp"""    
     def AcessSite(self):
         #Acessa um site, no caso o site do whatsapp
@@ -42,7 +43,7 @@ class BotAlberto:
         sleep(5)
         barraDeTexto = self.chrome.find_elements_by_xpath('//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
         barraDeTexto[0].click()
-        barraDeTexto[0].send_keys(f'{usuario}')
+        barraDeTexto[0].send_keys(f'{usuario}') 
         sleep(2)
         clicarPessoa = self.chrome.find_element_by_xpath(f"//span[@title='{usuario}'][@class='_35k-1 _1adfa _3-8er']") #Procura o nome de uma pessoa
         clicarPessoa.click() # Acessa o contato dessa pessoa
@@ -70,7 +71,7 @@ class BotAlberto:
             
             #Dorme por 5 segundos
             sleep(5)
-            mensagemSalva = None
+            
             #Procura as mensagens do contato
             try:
                 mensagem = self.chrome.find_elements_by_xpath('//div[contains(@class,"GDTQm message-in focusable-list-item")]')
@@ -96,39 +97,45 @@ class BotAlberto:
                 mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                 mandarMensagem.click()
                 self.jaRespondeu = 1
+                self.mensagemSalva = conteudoTexto
                 self.enviarMensagem()
+                self.enviarFigurinha()
                 self.enviaImagem(r"C:\Users\Nauvo\Downloads\mamaco.jpeg")
+                whatsapp.procuraMensagemEEnviarMensagem()
                 
             elif conteudoTexto.lower() == "continuar" and self.jaRespondeu!=0:
                 self.jaRespondeu = 0
+                self.mensagemSalva = conteudoTexto
                 self.MensagemInicial(self.usuarioAtual,"Digite outra diretoria")
+                whatsapp.procuraMensagemEEnviarMensagem()
 
-            elif conteudoTexto.lower() == "nao" or conteudoTexto.lower() == "não" and mensagemSalva != conteudoTexto:
+            elif conteudoTexto.lower() == "nao" or conteudoTexto.lower() == "não" and self.mensagemSalva != conteudoTexto and self.jaRespondeu!=0:
                 barraDeTexto[1].click()
                 barraDeTexto[1].send_keys(f"Como assim não? ", u'\uF605')
                 mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                 mandarMensagem.click()
-                mensagemSalva = conteudoTexto
+                self.mensagemSalva = conteudoTexto
                 whatsapp.procuraMensagemEEnviarMensagem()
 
-            elif conteudoTexto.lower() == "sim" and mensagemSalva != conteudoTexto :
+            elif conteudoTexto.lower() == "sim" and self.mensagemSalva != conteudoTexto and self.jaRespondeu!=0:
                 barraDeTexto[1].click()
-                barraDeTexto[1].send_keys(f"Sim, diretoria!! ", u'\u1F605')
+                barraDeTexto[1].send_keys(f"Sim, diretoria!! ", u'\uF494')
                 mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                 mandarMensagem.click()
-                mensagemSalva = conteudoTexto
+                self.mensagemSalva = conteudoTexto
                 whatsapp.procuraMensagemEEnviarMensagem()
+                
 
-            elif mensagemSalva != conteudoTexto:
-                mensagemSalva = conteudoTexto
-            else:
+            elif self.mensagemSalva != conteudoTexto:
                 barraDeTexto[1].click()
                 barraDeTexto[1].send_keys(f"Não entendi sua resposta, desculpa, ainda estou aprendendo =(")
                 mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                 mandarMensagem.click()
+                self.mensagemSalva = conteudoTexto
                 whatsapp.procuraMensagemEEnviarMensagem()
+           
+                               
                 
-                whatsapp.procuraMensagemEEnviarMensagem()
 
               
             
@@ -155,6 +162,29 @@ class BotAlberto:
         send_button = self.chrome.find_element_by_xpath('//span[@data-icon="send"]')
         send_button.click()
 
+
+    def enviarFigurinha(self):
+        emoji_section = self.chrome.find_element_by_xpath(
+            '//*[@id="main"]/footer/div[1]/div[1]/div[1]/button[2]/span'
+        )
+        emoji_section.click()
+        sleep(1)
+        sticker_section = self.chrome.find_element_by_xpath(
+            '//*[@id="main"]/footer/div[1]/div[1]/div[1]/button[4]/span'
+        )
+        sticker_section.click()
+        sleep(3)
+        favoritas_section = self.chrome.find_element_by_xpath(
+            '//*[@id="main"]/footer/div[2]/div/div[3]/div[1]/div/div[1]/div[1]/div/div/div[2]/span'
+        )
+        favoritas_section.click()
+        sleep(2)
+        figurinha = self.chrome.find_element_by_xpath(
+            '//*[@id="main"]/footer/div[2]/div/div[3]/div[1]/div/div[1]/div[2]/div/div[1]/div/span'
+        )
+        figurinha.click()
+        sleep(3)
+
     """ Encerra o bot"""   
     def FinalizarBot(self):
         self.chrome.quit()
@@ -167,18 +197,24 @@ if __name__ == '__main__':
     whatsapp.AcessSite()
     sleep(20)
     #Envia mensagens iniciais para esses usuarios
-    lista = ["Wiki"] #Cuidado, depende do nome que o usuário está no whatsapp
+    lista = ["Volvo", "Bastão"] #Cuidado, depende do nome que o usuário está no whatsapp
     for i in lista:
         
         whatsapp.ProcuraUsuario(i)
-        whatsapp.MensagemInicial(i,(f'Olá {i}, eu sou o Alberto bot, tudo bem?', u'\u2764', ' Gostaria de conversar com algum dos nosso diretores? Escreva o Nome do departamento'))
-    i=0
+        whatsapp.MensagemInicial(i,(f'Olá, tudo bem? {i} ',':happy'+"\n"))
+        inicio = time.time()
+        fim = time.time()
+        while fim - inicio < 60:
+            whatsapp.procuraMensagemEEnviarMensagem()
+            fim = time.time()
+            if inicio-fim>10:
+                inicio = time.time()
+                fim = time.time()
+            print(inicio, fim, int(fim-inicio))
+
     
     
-    while i<1:
-        
-        whatsapp.procuraMensagemEEnviarMensagem()
-        sleep(5)
+    
      
        
 
