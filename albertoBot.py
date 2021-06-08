@@ -39,14 +39,14 @@ class BotAlberto:
 
     """Procura um usuario com base no seu nome na barra de pesquisa e acessa caso ache o usuario (Poderia ser um numero também"""
     def ProcuraUsuario(self,usuario):
-        self.usuarioAtual = usuario
-        sleep(5)
-        barraDeTexto = self.chrome.find_elements_by_xpath('//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
-        barraDeTexto[0].click()
-        barraDeTexto[0].send_keys(f'{usuario}') 
-        sleep(2)
-        clicarPessoa = self.chrome.find_element_by_xpath(f"//span[@title='{usuario}'][@class='_35k-1 _1adfa _3-8er']") #Procura o nome de uma pessoa
-        clicarPessoa.click() # Acessa o contato dessa pessoa
+            self.usuarioAtual = usuario
+            sleep(5)
+            barraDeTexto = self.chrome.find_elements_by_xpath('//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
+            barraDeTexto[0].click()
+            barraDeTexto[0].send_keys(f'{usuario}') 
+            sleep(2)
+            clicarPessoa = self.chrome.find_element_by_xpath(f"//span[@title='{usuario}'][@class='_35k-1 _1adfa _3-8er']") #Procura o nome de uma pessoa
+            clicarPessoa.click() # Acessa o contato dessa pessoa
         
     """Envia uma mensagem inicial ao usuário"""
     def MensagemInicial(self,usuario,texto):
@@ -88,7 +88,7 @@ class BotAlberto:
                 barraDeTexto = self.chrome.find_elements_by_xpath('//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
 
             except:
-                whatsapp.procuraMensagemEEnviarMensagem()
+                self.procuraMensagemEEnviarMensagem()
             
             #Responde com base na última resposta do usuário
             if conteudoTexto.lower() in sheetsBot.textinhos and self.jaRespondeu == 0:
@@ -101,13 +101,13 @@ class BotAlberto:
                 self.enviarMensagem()
                 self.enviarFigurinha()
                 self.enviaImagem(r"C:\Users\Nauvo\Downloads\mamaco.jpeg")
-                whatsapp.procuraMensagemEEnviarMensagem()
+                self.procuraMensagemEEnviarMensagem()
                 
             elif conteudoTexto.lower() == "continuar" and self.jaRespondeu!=0:
                 self.jaRespondeu = 0
                 self.mensagemSalva = conteudoTexto
                 self.MensagemInicial(self.usuarioAtual,"Digite outra diretoria")
-                whatsapp.procuraMensagemEEnviarMensagem()
+                self.procuraMensagemEEnviarMensagem()
 
             elif conteudoTexto.lower() == "nao" or conteudoTexto.lower() == "não" and self.mensagemSalva != conteudoTexto and self.jaRespondeu!=0:
                 barraDeTexto[1].click()
@@ -115,7 +115,7 @@ class BotAlberto:
                 mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                 mandarMensagem.click()
                 self.mensagemSalva = conteudoTexto
-                whatsapp.procuraMensagemEEnviarMensagem()
+                self.procuraMensagemEEnviarMensagem()
 
             elif conteudoTexto.lower() == "sim" and self.mensagemSalva != conteudoTexto and self.jaRespondeu!=0:
                 barraDeTexto[1].click()
@@ -123,7 +123,7 @@ class BotAlberto:
                 mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                 mandarMensagem.click()
                 self.mensagemSalva = conteudoTexto
-                whatsapp.procuraMensagemEEnviarMensagem()
+                self.procuraMensagemEEnviarMensagem()
                 
 
             elif self.mensagemSalva != conteudoTexto:
@@ -132,7 +132,7 @@ class BotAlberto:
                 mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                 mandarMensagem.click()
                 self.mensagemSalva = conteudoTexto
-                whatsapp.procuraMensagemEEnviarMensagem()
+                self.procuraMensagemEEnviarMensagem()
            
                                
                 
@@ -192,16 +192,19 @@ class BotAlberto:
     
 
 #Não precisa se preocupar com esse if kk, basicamente, ele é só pra situações onde há mais de um arquivo de código
-if __name__ == '__main__':
+def iniciar():
     whatsapp = BotAlberto()
     whatsapp.AcessSite()
-    sleep(20)
+    sleep(10)
+    
     #Envia mensagens iniciais para esses usuarios
     lista = ["Volvo", "Bastão"] #Cuidado, depende do nome que o usuário está no whatsapp
     for i in lista:
-        
+        print('k')
         whatsapp.ProcuraUsuario(i)
+        print('k')
         whatsapp.MensagemInicial(i,(f'Olá, tudo bem? {i} ',':happy'+"\n"))
+        
         inicio = time.time()
         fim = time.time()
         while fim - inicio < 60:
@@ -211,6 +214,9 @@ if __name__ == '__main__':
                 inicio = time.time()
                 fim = time.time()
             print(inicio, fim, int(fim-inicio))
+            
+
+            
 
     
     
