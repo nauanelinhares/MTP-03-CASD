@@ -1,23 +1,11 @@
 import time
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
 from time import sleep
 import sheetsBot
 from selenium.webdriver.common.keys import Keys
 
-"""
-Antes de rodar o código:
-1. instale as seguintes bibliotecas:
-    - Selenium
-    - time
-    Para instalar a biblioteca basta escreve no promt de comando:
-        pip install "biblioteca"
-2. Tenha o google chrome e instalado
-3. Baixe o chromedriver para utilizar o selenium: 
-    https://chromedriver.chromium.org/downloads
 
-"""
-class BotAlberto:
+class Bot:
     #Não precisa saber disso, mas é tipo um constructor que constroí o bot
     def __init__(self):
         self.driver_path = executable_path="chromedriver.exe" # ATENÇÃO!!! MUDE O DIRETÓRIO CASO NÃO RODE!
@@ -33,7 +21,7 @@ class BotAlberto:
         self.usuarioAtual = None # O usuario para o qual o bot está conectado
         
     """Acessa um site, no caso do Alberto Bot, padroniza-se o whatsapp"""    
-    def AcessSite(self):
+    def acessarWhatsapp(self):
         #Acessa um site, no caso o site do whatsapp
         self.chrome.get('https://web.whatsapp.com/')
 
@@ -70,7 +58,7 @@ class BotAlberto:
     def procuraMensagemEEnviarMensagem(self):
             
             #Dorme por 5 segundos
-            sleep(5)
+            sleep(6)
             
             #Procura as mensagens do contato
             try:
@@ -99,7 +87,7 @@ class BotAlberto:
                 self.jaRespondeu = 1
                 self.mensagemSalva = conteudoTexto
                 self.enviarMensagem()
-                self.enviarFigurinha()
+                #self.enviarFigurinha()
                 self.enviaImagem(r"C:\Users\Nauvo\Downloads\mamaco.jpeg")
                 self.procuraMensagemEEnviarMensagem()
                 
@@ -126,7 +114,7 @@ class BotAlberto:
                 self.procuraMensagemEEnviarMensagem()
                 
 
-            elif self.mensagemSalva != conteudoTexto:
+            elif self.mensagemSalva != conteudoTexto and self.jaRespondeu!=0:
                 barraDeTexto[1].click()
                 barraDeTexto[1].send_keys(f"Não entendi sua resposta, desculpa, ainda estou aprendendo =(")
                 mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
@@ -192,28 +180,10 @@ class BotAlberto:
     
 
 #Não precisa se preocupar com esse if kk, basicamente, ele é só pra situações onde há mais de um arquivo de código
-def iniciar():
-    whatsapp = BotAlberto()
-    whatsapp.AcessSite()
-    sleep(10)
-    
-    #Envia mensagens iniciais para esses usuarios
-    lista = ["Volvo", "Bastão"] #Cuidado, depende do nome que o usuário está no whatsapp
-    for i in lista:
-        print('k')
-        whatsapp.ProcuraUsuario(i)
-        print('k')
-        whatsapp.MensagemInicial(i,(f'Olá, tudo bem? {i} ',':happy'+"\n"))
-        
-        inicio = time.time()
-        fim = time.time()
-        while fim - inicio < 60:
-            whatsapp.procuraMensagemEEnviarMensagem()
-            fim = time.time()
-            if inicio-fim>10:
-                inicio = time.time()
-                fim = time.time()
-            print(inicio, fim, int(fim-inicio))
+
+   
+           
+           
             
 
             

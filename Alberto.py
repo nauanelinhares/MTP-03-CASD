@@ -1,61 +1,99 @@
 import sys
+from time import sleep
+import time
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
-import albertoBot
+import funcoesBot
 
-class Color(QWidget):
+"""
+Antes de rodar o código:
+1. instale as seguintes bibliotecas:
+    - Selenium
+    - time
+    - PyQt6
+    - PyQt5
+    - gspread
+    Para instalar a biblioteca basta escreve no promt de comando:
+        pip install "biblioteca"
+2. Tenha o google chrome e instalado
+3. Baixe o chromedriver para utilizar o selenium: 
+    https://chromedriver.chromium.org/downloads
 
-    def __init__(self, color):
-        super(Color, self).__init__()
-        self.setAutoFillBackground(True)
+"""
 
-        palette = self.palette()
-        palette.setColor(QPalette.ColorRole.Window, QColor(color))
-        self.setPalette(palette)
-
-class Interface (QMainWindow):
+class programaAlberto (QMainWindow):
     def __init__ (self):
         super().__init__()
+        
+        "Alberto"
+        self.albertoBot = None
+
+        "Interface do Albertinho"
         #Tamanho da Interface
         
         #Titulo da Interface
         self.setWindowTitle("Alberto Bot")
         #Nossa interface
         self.interface = QWidget()
+        self.grid = QVBoxLayout(self.interface)
         #Mensagem
         self.texto = QLabel("Olá, este é o Alberto Bot, selecione o que você quer fazer!")
-        
+        self.grid.addWidget(self.texto)
         #Fonte do texto
         font = self.texto.font()
         font.setPointSize(14)
         self.texto.setFont(font)
         #Imagem
-        
-        self.grid = QVBoxLayout(self.interface)
         #Botoes
-        self.iniciar = QPushButton("Iniciar")
-        self.fim = QPushButton("Finalizar")
-        self.grid.addWidget(self.texto)
-    
+        self.botaoIniciar = QPushButton("Iniciar")
+        self.grid.addWidget(self.botaoIniciar)
+        self.botaoIniciar.clicked.connect(self.botaoIniciarAlberto)
 
-        self.grid.addWidget(self.iniciar)
-        self.iniciar.clicked.connect(self.iniciarAlberto)
-        self.grid.addWidget(self.fim)
-        self.fim.clicked.connect(self.fecharAlberto)
+        self.botaoMensagemInicial = QPushButton("Iniciar Mensagem")
+        self.grid.addWidget(self.botaoMensagemInicial)
+        self.botaoMensagemInicial.clicked.connect(self.enviarMensagemInicial)
+        
+        ### Finalizar o Bot
+        self.botaoFim = QPushButton("Finalizar")
+        self.grid.addWidget(self.botaoFim)
+        self.botaoFim.clicked.connect(self.fecharAlberto)
         
         self.texto.setAlignment(Qt.Alignment.AlignHCenter | Qt.Alignment.AlignTop)
         self.setCentralWidget(self.interface)
 
 
-    def iniciarAlberto(self):
-        self.hide()
-        albertoBot.iniciar()
-        self.show()
+    def botaoIniciarAlberto(self):
+        self.botaoIniciar.setDisabled(True)
+        self.albertoBot = funcoesBot.Bot()
+        self.albertoBot.acessarWhatsapp()
+        sleep(10)
 
     def fecharAlberto(self):
-        self.fim.setDisabled(True)
-        self.close()        
+        self.botaoFim.setDisabled(True)
+        self.albertoBot.FinalizarBot() 
+        self.close()     
+          
+    def enviarMensagemInicial(self):
+         #Envia mensagens iniciais para esses usuarios
+        lista = ["Nauane Linhares", "Bastão"] #Cuidado, depende do nome que o usuário está no whatsapp
+        for i in lista:
+    
+            self.albertoBot.ProcuraUsuario(i)
+
+            self.albertoBot.MensagemInicial(i,(f'Olá, tudo bem? {i} ',':happy'+"\n"))
+            
+            inicio = time.time()
+            fim = time.time()
+            while fim - inicio < 60:
+                tempoAntesDeExecutar = time.time()
+                self.albertoBot.procuraMensagemEEnviarMensagem()
+                fim = time.time()
+                print(fim - inicio)
+                if fim - tempoAntesDeExecutar>10:
+                    inicio = time.time()
+                    fim = time.time()
+
         """
         self.widget = QComboBox()
         self.grid.addWidget(self.widget)
@@ -135,9 +173,9 @@ class Interface (QMainWindow):
         
         
 if __name__ == '__main__':
-    programaAlberto = QApplication(sys.argv)
-    interfaceAlberto = Interface()
-    interfaceAlberto.show()
-    programaAlberto.exec()
+    programaIniciar = QApplication(sys.argv)
+    programa = programaAlberto()
+    programa.show()
+    programaIniciar.exec()
 
 
