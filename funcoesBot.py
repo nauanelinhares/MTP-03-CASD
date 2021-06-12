@@ -25,13 +25,29 @@ class Bot:
         #Acessa um site, no caso o site do whatsapp
         self.chrome.get('https://web.whatsapp.com/')
 
+    """Procura mensagens não lidas"""
+    def mensagemNaoLida(self):
+
+        try:
+            notificacao = self.chrome.find_elements_by_class_name('_38M1B')
+            sleep(2)
+            notificacao[0].click()
+            sleep(2)
+            # responder com base na mensagem não lida
+            # self.MensagemInicial('Olá, tudo bem?',':happy'+"\n")
+            sleep(2)
+
+        except:
+            #função entrar no grupo fixo
+            sleep(10)
+
     """Procura um usuario com base no seu nome na barra de pesquisa e acessa caso ache o usuario (Poderia ser um numero também"""
     def ProcuraUsuario(self,usuario):
             self.usuarioAtual = usuario
             sleep(5)
             barraDeTexto = self.chrome.find_elements_by_xpath('//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
             barraDeTexto[0].click()
-            barraDeTexto[0].send_keys(f'{usuario}') 
+            barraDeTexto[0].send_keys(f'{usuario}')
             sleep(2)
             clicarPessoa = self.chrome.find_element_by_xpath(f"//span[@title='{usuario}'][@class='_35k-1 _1adfa _3-8er']") #Procura o nome de uma pessoa
             clicarPessoa.click() # Acessa o contato dessa pessoa
@@ -54,6 +70,7 @@ class Bot:
                 barraDeTexto[1].send_keys(message) 
             mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
             mandarMensagem.click()
+            
     """Manda mensagem conforme resposta do usuario"""
     def procuraMensagemEEnviarMensagem(self):
             

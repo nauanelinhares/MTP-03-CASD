@@ -59,7 +59,7 @@ class programaAlberto (QMainWindow):
         self.grid.addWidget(self.botaoFim)
         self.botaoFim.clicked.connect(self.fecharAlberto)
         
-        self.texto.setAlignment(Qt.Alignment.AlignHCenter | Qt.Alignment.AlignTop)
+       # self.texto.setAlignment(Qt.Alignment.AlignHCenter | Qt.Alignment.AlignTop)
         self.setCentralWidget(self.interface)
 
 
@@ -76,23 +76,20 @@ class programaAlberto (QMainWindow):
           
     def enviarMensagemInicial(self):
          #Envia mensagens iniciais para esses usuarios
-        lista = ["Nauane Linhares", "Bastão"] #Cuidado, depende do nome que o usuário está no whatsapp
-        for i in lista:
-    
-            self.albertoBot.ProcuraUsuario(i)
 
-            self.albertoBot.MensagemInicial(i,(f'Olá, tudo bem? {i} ',':happy'+"\n"))
+        while True:
+            self.albertoBot.mensagemNaoLida()
             
-            inicio = time.time()
-            fim = time.time()
-            while fim - inicio < 60:
-                tempoAntesDeExecutar = time.time()
-                self.albertoBot.procuraMensagemEEnviarMensagem()
-                fim = time.time()
-                print(fim - inicio)
-                if fim - tempoAntesDeExecutar>10:
-                    inicio = time.time()
-                    fim = time.time()
+     #   inicio = time.time()
+     #   fim = time.time()
+     #   while fim - inicio < 60:
+     #       tempoAntesDeExecutar = time.time()
+     #       self.albertoBot.procuraMensagemEEnviarMensagem()
+     #       fim = time.time()
+     #       print(fim - inicio)
+     #       if fim - tempoAntesDeExecutar>10:
+     #           inicio = time.time()
+     #           fim = time.time()
 
         """
         self.widget = QComboBox()
@@ -175,7 +172,8 @@ class programaAlberto (QMainWindow):
 if __name__ == '__main__':
     programaIniciar = QApplication(sys.argv)
     programa = programaAlberto()
-    programa.show()
+    programa.show()    
     programaIniciar.exec()
+    
 
 
