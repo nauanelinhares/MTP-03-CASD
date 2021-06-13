@@ -22,6 +22,8 @@ Antes de rodar o código:
 
 """
 
+
+
 class programaAlberto (QMainWindow):
     def __init__ (self):
         super().__init__()
@@ -32,34 +34,45 @@ class programaAlberto (QMainWindow):
         "Interface do Albertinho"
         #Tamanho da Interface
         
-        #Titulo da Interface
+        "Titulo da Interface"
         self.setWindowTitle("Alberto Bot")
-        #Nossa interface
+        "Nossa interface"
         self.interface = QWidget()
-        self.grid = QVBoxLayout(self.interface)
+        self.layout = QVBoxLayout(self.interface)
         #Mensagem
-        self.texto = QLabel("Olá, este é o Alberto Bot, selecione o que você quer fazer!")
-        self.grid.addWidget(self.texto)
+        self.texto = QLabel("Olá, eu sou Alberto Bot, selecione o que você quer fazer!")
+        self.layout.addWidget(self.texto)
         #Fonte do texto
         font = self.texto.font()
         font.setPointSize(14)
         self.texto.setFont(font)
         #Imagem
-        #Botoes
+        self.imagem = QLabel()
+        self.imagem.setPixmap(QPixmap("alberto.jpg"))
+        self.imagem.setFixedSize(QSize(320,240))
+        self.imagem.setScaledContents(True)
+        self.imagem.setAlignment(Qt.Alignment.AlignCenter)
+        self.layout.addWidget(self.imagem)
+        
+        "Botoes"
+
+        #Iniciar
         self.botaoIniciar = QPushButton("Iniciar")
-        self.grid.addWidget(self.botaoIniciar)
+        self.layout.addWidget(self.botaoIniciar)
         self.botaoIniciar.clicked.connect(self.botaoIniciarAlberto)
 
+        #EnviarMensagemInicial
         self.botaoMensagemInicial = QPushButton("Iniciar Mensagem")
-        self.grid.addWidget(self.botaoMensagemInicial)
+        self.layout.addWidget(self.botaoMensagemInicial)
         self.botaoMensagemInicial.clicked.connect(self.enviarMensagemInicial)
         
         ### Finalizar o Bot
         self.botaoFim = QPushButton("Finalizar")
-        self.grid.addWidget(self.botaoFim)
+        self.layout.addWidget(self.botaoFim)
         self.botaoFim.clicked.connect(self.fecharAlberto)
         
-       # self.texto.setAlignment(Qt.Alignment.AlignHCenter | Qt.Alignment.AlignTop)
+      #  self.texto.setAlignment(Qt.Alignment.AlignHCenter | Qt.Alignment.AlignTop)
+        #Abrir Interface
         self.setCentralWidget(self.interface)
 
 
@@ -93,7 +106,7 @@ class programaAlberto (QMainWindow):
 
         """
         self.widget = QComboBox()
-        self.grid.addWidget(self.widget)
+        self.layout.addWidget(self.widget)
         self.widget.addItems(["Bastão", "Manga", "Volvo", "Joseph"])
         self.widget.currentIndexChanged.connect( self.index_changed)
         # There is an alternate signal to send the text.
@@ -112,8 +125,8 @@ class programaAlberto (QMainWindow):
         self.imagem = QLabel("Olá, este é o Alberto Bot, escreva o que você quer fazer!")
         
         self.texto.setScaledContents(True)
-        self.grid.addWidget(self.texto)
-        self.grid.addWidget(self.imagem)
+        self.layout.addWidget(self.texto)
+        self.layout.addWidget(self.imagem)
         font = self.interface.font()
         font.setPointSize(14)
         self.interface.setFont(font)
@@ -123,16 +136,16 @@ class programaAlberto (QMainWindow):
 
         
         self.interface = QWidget()
-        self.grid = QGridLayout(self.interface)
+        self.layout = QlayoutLayout(self.interface)
         self.botao = QPushButton('Mandar mensagens para várias pessoas')
-        self.grid.addWidget(self.botao, 0, 0, 0 , 1)
+        self.layout.addWidget(self.botao, 0, 0, 0 , 1)
         self.botao1 = QPushButton('Mandar Arquivo')
-        self.grid.addWidget(self.botao1,0 , 1, 0 , 1)
+        self.layout.addWidget(self.botao1,0 , 1, 0 , 1)
         self.botao.clicked.connect(lambda: print('Olá Mundo'))
         self.setCentralWidget(self.interface)
         
         self.interface = QWidget()
-        self.grid = QGridLayout(self.interface)
+        self.layout = QlayoutLayout(self.interface)
 
         
         #Botoes
@@ -144,8 +157,8 @@ class programaAlberto (QMainWindow):
         self.mandarMensagem.clicked.connect(self.botaofoiclicado)
         self.mandarMensagem.clicked.connect(self.verSeObotaoFoiClicado)
         self.enviarPdf = QPushButton("Enviar pdf")       
-        self.grid.addWidget(self.mandarMensagem, 0, 0, 0 , 1)
-        self.grid.addWidget(self.enviarPdf, 0, 1, 0 , 1)
+        self.layout.addWidget(self.mandarMensagem, 0, 0, 0 , 1)
+        self.layout.addWidget(self.enviarPdf, 0, 1, 0 , 1)
         self.setCentralWidget(self.interface)
 
         def botaofoiclicado(self):
@@ -171,6 +184,7 @@ class programaAlberto (QMainWindow):
         
 if __name__ == '__main__':
     programaIniciar = QApplication(sys.argv)
+    programaIniciar.setStyle("Fusion")
     programa = programaAlberto()
     programa.show()    
     programaIniciar.exec()
