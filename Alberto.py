@@ -55,7 +55,7 @@ class programaAlberto (QMainWindow):
         self.imagem.setPixmap(QPixmap("alberto.jpg"))
         self.imagem.setFixedSize(QSize(320,240))
         self.imagem.setScaledContents(True)
-        self.imagem.setAlignment(Qt.Alignment.AlignCenter)
+#        self.imagem.setAlignment(Qt.Alignment.AlignCenter)
         self.layout.addWidget(self.imagem)
         
         
@@ -104,15 +104,15 @@ class programaAlberto (QMainWindow):
         self.close()     
           
     def enviarMensagemInicial(self):
-         #Envia mensagens iniciais para esses usuarios
+        # Envia mensagens iniciais para esses usuarios
         while True:
-            self.albertoBot.mensagemNaoLida()
-
-            self.albertoBot.identificarMensagem()
-
+            boolean = self.albertoBot.mensagemNaoLida()
+            sleep(1)
+            if boolean == 1:
+                self.albertoBot.identificarMensagem()
+                sleep(1)
             self.albertoBot.grupoEspera()
-
-            sleep(3)
+            sleep(1)
             
         
         
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     programaIniciar = QApplication(sys.argv)
     programaIniciar.setStyle("Fusion")
     programa = programaAlberto()
-    programa.show()    
+    programa.show()
     programaIniciar.exec()
     
 

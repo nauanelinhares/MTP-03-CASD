@@ -33,13 +33,12 @@ class Bot:
 
         try:
             notificacao = self.chrome.find_elements_by_class_name('_38M1B')
-            sleep(2)
             notificacao[0].click()
-            sleep(2)
             #self.albertoBot.identificarMensagem()
+            return 1
 
         except:
-            sleep(3)
+            return 0
 
     """Procura um usuario com base no seu nome na barra de pesquisa e acessa caso ache o usuario (Poderia ser um numero também"""
 
@@ -84,16 +83,17 @@ class Bot:
             "//span[@data-icon='pinned']")
         for grupo in grupos:
             grupo.click()
-            sleep(2)
+            sleep(1)
 
 
     def identificarMensagem(self):
 
         # Dorme por 5 segundos
-        sleep(3)
+        sleep(1)
 
         # Procura as mensagens do contato
         try:
+            print("teste1")
             mensagem = self.chrome.find_elements_by_xpath(
                 '//div[contains(@class,"GDTQm message-in focusable-list-item")]')
 
@@ -106,13 +106,11 @@ class Bot:
 
             conteudoTexto = procurandoElemento[len(procurandoElemento)-1].text
 
-          #  print(f'{conteudoTexto}')
             # Acessa a barra de texto (região onde vou mandar a mensagem)
             barraDeTexto = self.chrome.find_elements_by_xpath(
                 '//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
-
             if conteudoTexto.isdigit():
-                mensagemASerEnviada = sheetsBot.pegarMensagem(conteudoTexto)
+                mensagemASerEnviada = sheetsBot.pegarMensagem(int(conteudoTexto))
                 barraDeTexto[1].click()
                 for message in mensagemASerEnviada:
                     barraDeTexto[1].send_keys(message)

@@ -8,21 +8,19 @@ client = gspread.authorize(creds)
 
 sheet = client.open("CASDBotTree").worksheet("TreeAlberto")
 df = pd.DataFrame(sheet.get_all_records(head = 3))
-
-
+df.set_index("Nros.", inplace = True)
 
 def pegarMensagem(i):
     
-    df.set_index("Nros.", inplace = True)
     numero = i
-    texto = pd.DataFrame(df.loc[[numero], 'Textos']).iloc[0,0]
+    texto = pd.DataFrame(df.loc[[numero], 'Mensagens']).iloc[0,0]
+    #print(texto)
     textos = texto.split("\n")
     mensagem = [x +Keys.SHIFT + Keys.ENTER for x in textos]
     return mensagem
 def mensagemErro():
-    df.set_index("Nros.", inplace = True)
     numero = 0
-    texto = pd.DataFrame(df.loc[[numero], 'Textos']).iloc[0,0]
+    texto = pd.DataFrame(df.loc[[numero], 'Mensagens']).iloc[0,0]
     textos = texto.split("\n")
     mensagem = [x +Keys.SHIFT + Keys.ENTER for x in textos]
     return mensagem
