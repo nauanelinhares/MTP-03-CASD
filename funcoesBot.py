@@ -115,7 +115,6 @@ class Bot:
 
         elif conteudoTexto.lower() == "nao" or conteudoTexto.lower() == "não" and self.mensagemSalva != conteudoTexto and self.jaRespondeu != 0:
             barraDeTexto[1].click()
-<<<<<<< HEAD
             mensagemASerEnviada = sheetsBot.pegarMensagem(0)
             for message in mensagemASerEnviada:
                 barraDeTexto[1].send_keys(message)
@@ -176,34 +175,6 @@ class Bot:
 
               
             
-=======
-            barraDeTexto[1].send_keys(f"Como assim não? ", u'\uF605')
-            mandarMensagem = self.chrome.find_element_by_xpath(
-                "//span[@data-icon='send']")
-            mandarMensagem.click()
-            self.mensagemSalva = conteudoTexto
-            self.procuraMensagemEEnviarMensagem()
-
-        elif conteudoTexto.lower() == "sim" and self.mensagemSalva != conteudoTexto and self.jaRespondeu != 0:
-            barraDeTexto[1].click()
-            barraDeTexto[1].send_keys(f"Sim, diretoria!! ", u'\uF494')
-            mandarMensagem = self.chrome.find_element_by_xpath(
-                "//span[@data-icon='send']")
-            mandarMensagem.click()
-            self.mensagemSalva = conteudoTexto
-            self.procuraMensagemEEnviarMensagem()
-
-        elif self.mensagemSalva != conteudoTexto and self.jaRespondeu != 0:
-            barraDeTexto[1].click()
-            barraDeTexto[1].send_keys(
-                f"Não entendi sua resposta, desculpa, ainda estou aprendendo =(")
-            mandarMensagem = self.chrome.find_element_by_xpath(
-                "//span[@data-icon='send']")
-            mandarMensagem.click()
-            self.mensagemSalva = conteudoTexto
-            self.procuraMensagemEEnviarMensagem()
-
->>>>>>> 6d10bc8eefcaadea0810fe97661b448fadb06a46
     """Envia uma mensagem padrão para um usuário"""
 
     def enviarMensagem(self):
