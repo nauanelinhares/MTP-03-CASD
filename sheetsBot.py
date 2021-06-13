@@ -1,4 +1,4 @@
-import string
+import pandas as pd
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from selenium.webdriver.common.keys import Keys
@@ -7,17 +7,22 @@ creds = ServiceAccountCredentials.from_json_keyfile_name("casd-bot-1593e787a9bc.
 client = gspread.authorize(creds)
 
 sheet = client.open("CASDBotTree").worksheet("TreeAlberto")
+df = pd.DataFrame(sheet.get_all_records(head = 3))
+
+
 
 def pegarMensagem(i):
-    num = int(i)+4
-    celula = "N"+str(num)
-    texto = sheet.acell(celula).value
+    
+    df.set_index("Nros.", inplace = True)
+    numero = i
+    texto = pd.DataFrame(df.loc[[numero], 'Textos']).iloc[0,0]
     textos = texto.split("\n")
     mensagem = [x +Keys.SHIFT + Keys.ENTER for x in textos]
-    print(mensagem)
     return mensagem
 def mensagemErro():
-    texto = sheet.acell("N2").value
+    df.set_index("Nros.", inplace = True)
+    numero = 0
+    texto = pd.DataFrame(df.loc[[numero], 'Textos']).iloc[0,0]
     textos = texto.split("\n")
     mensagem = [x +Keys.SHIFT + Keys.ENTER for x in textos]
     return mensagem
@@ -29,7 +34,7 @@ textos = sheet.col_values(3)[3:]
 diretores = sheet.col_values(4)[3:]
 """
 
-x = pegarMensagem(0)
+
 # Encontrar tamanhos pra evitar panes futuras
 
 # Funcao que pega a mensagem
