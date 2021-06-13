@@ -51,7 +51,7 @@ class programaAlberto (QMainWindow):
         self.imagem.setPixmap(QPixmap("alberto.jpg"))
         self.imagem.setFixedSize(QSize(320,240))
         self.imagem.setScaledContents(True)
-      #  self.imagem.setAlignment(Qt.Alignment.AlignCenter)
+        self.imagem.setAlignment(Qt.Alignment.AlignCenter)
         self.layout.addWidget(self.imagem)
         
         "Botoes"
@@ -71,7 +71,7 @@ class programaAlberto (QMainWindow):
         self.layout.addWidget(self.botaoFim)
         self.botaoFim.clicked.connect(self.fecharAlberto)
         
-      #  self.texto.setAlignment(Qt.Alignment.AlignHCenter | Qt.Alignment.AlignTop)
+        self.texto.setAlignment(Qt.Alignment.AlignHCenter | Qt.Alignment.AlignTop)
         #Abrir Interface
         self.setCentralWidget(self.interface)
 
