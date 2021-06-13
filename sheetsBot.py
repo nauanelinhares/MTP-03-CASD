@@ -1,3 +1,4 @@
+import string
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from selenium.webdriver.common.keys import Keys
@@ -5,27 +6,41 @@ scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/aut
 creds = ServiceAccountCredentials.from_json_keyfile_name("casd-bot-1593e787a9bc.json", scope)
 client = gspread.authorize(creds)
 
-sheet = client.open("CASDBotTree").worksheet("Membros")
+sheet = client.open("CASDBotTree").worksheet("TreeAlberto")
 
+def pegarMensagem(i):
+    num = int(i)+4
+    celula = "N"+str(num)
+    texto = sheet.acell(celula).value
+    textos = texto.split("\n")
+    mensagem = [x +Keys.SHIFT + Keys.ENTER for x in textos]
+    print(mensagem)
+    return mensagem
+def mensagemErro():
+    texto = sheet.acell("N2").value
+    textos = texto.split("\n")
+    mensagem = [x +Keys.SHIFT + Keys.ENTER for x in textos]
+    return mensagem
 # Armazenar data da tabela
+"""
 nros   = sheet.col_values(1)
-emojis = sheet.col_values(2)
+emojis = sheet.col_values()
 textos = sheet.col_values(3)[3:]
 diretores = sheet.col_values(4)[3:]
-opcoes = sheet.get('D:M')
-
-
-# Encontrar tamanhos pra evitar panes futuras
-size_nros   = len(nros)
-size_opcoes = len(opcoes)
-
-# Primeira mensagem
-linha_nro = 3
-
-
-textinhos = [x.lower() for x in textos]
-mensagem = [x +Keys.SHIFT + Keys.ENTER for x in textos]
 """
+
+x = pegarMensagem(0)
+# Encontrar tamanhos pra evitar panes futuras
+
+# Funcao que pega a mensagem
+
+
+
+
+"""
+textinhos = [x.lower() for x in textos]
+
+
 while True:
     # Texto prinicipal da mensagem
     mensagem = '\n' + textos[linha_nro] 

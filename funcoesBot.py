@@ -50,8 +50,9 @@ class Bot:
             mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
             mandarMensagem.click()
             barraDeTexto[1].click()
-            for message in sheetsBot.mensagem:
-                barraDeTexto[1].send_keys(message) 
+            mensagemASerEnviada = sheetsBot.pegarMensagem(0)
+            for message in mensagemASerEnviada:
+                barraDeTexto[1].send_keys(message)
             mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
             mandarMensagem.click()
     """Manda mensagem conforme resposta do usuario"""
@@ -79,44 +80,26 @@ class Bot:
                 self.procuraMensagemEEnviarMensagem()
             
             #Responde com base na última resposta do usuário
-            if conteudoTexto.lower() in sheetsBot.textinhos and self.jaRespondeu == 0:
+            if conteudoTexto.isdigit():
                 barraDeTexto[1].click()
-                barraDeTexto[1].send_keys(f"O(A) Diretor(a) é o(a) {sheetsBot.diretores[sheetsBot.textinhos.index(conteudoTexto.lower())]}")
+                mensagemASerEnviada = sheetsBot.pegarMensagem(conteudoTexto)
+                for message in mensagemASerEnviada:
+                    barraDeTexto[1].send_keys(message)
                 mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                 mandarMensagem.click()
                 self.jaRespondeu = 1
                 self.mensagemSalva = conteudoTexto
-                self.enviarMensagem()
                 #self.enviarFigurinha()
-                self.enviaImagem(r"C:\Users\Nauvo\Downloads\mamaco.jpeg")
-                self.procuraMensagemEEnviarMensagem()
-                
-            elif conteudoTexto.lower() == "continuar" and self.jaRespondeu!=0:
-                self.jaRespondeu = 0
-                self.mensagemSalva = conteudoTexto
-                self.MensagemInicial(self.usuarioAtual,"Digite outra diretoria")
-                self.procuraMensagemEEnviarMensagem()
-
-            elif conteudoTexto.lower() == "nao" or conteudoTexto.lower() == "não" and self.mensagemSalva != conteudoTexto and self.jaRespondeu!=0:
-                barraDeTexto[1].click()
-                barraDeTexto[1].send_keys(f"Como assim não? ", u'\uF605')
-                mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
-                mandarMensagem.click()
-                self.mensagemSalva = conteudoTexto
-                self.procuraMensagemEEnviarMensagem()
-
-            elif conteudoTexto.lower() == "sim" and self.mensagemSalva != conteudoTexto and self.jaRespondeu!=0:
-                barraDeTexto[1].click()
-                barraDeTexto[1].send_keys(f"Sim, diretoria!! ", u'\uF494')
-                mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
-                mandarMensagem.click()
-                self.mensagemSalva = conteudoTexto
+                #self.enviaImagem(r"C:\Users\Nauvo\Downloads\mamaco.jpeg")
                 self.procuraMensagemEEnviarMensagem()
                 
 
-            elif self.mensagemSalva != conteudoTexto and self.jaRespondeu!=0:
+            elif self.jaRespondeu!=0 and self.mensagemSalva!=conteudoTexto:
                 barraDeTexto[1].click()
-                barraDeTexto[1].send_keys(f"Não entendi sua resposta, desculpa, ainda estou aprendendo =(")
+
+                mensagemASerEnviada = sheetsBot.mensagemErro()
+                for message in mensagemASerEnviada:
+                    barraDeTexto[1].send_keys(message)
                 mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                 mandarMensagem.click()
                 self.mensagemSalva = conteudoTexto
