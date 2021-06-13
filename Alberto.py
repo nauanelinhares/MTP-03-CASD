@@ -5,7 +5,8 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 import funcoesBot
-
+import os
+import threading
 """
 Antes de rodar o código:
 1. instale as seguintes bibliotecas:
@@ -27,6 +28,9 @@ Antes de rodar o código:
 class programaAlberto (QMainWindow):
     def __init__ (self):
         super().__init__()
+        
+        "Processos"
+        
         
         "Alberto"
         self.albertoBot = None
@@ -54,36 +58,48 @@ class programaAlberto (QMainWindow):
         self.imagem.setAlignment(Qt.Alignment.AlignCenter)
         self.layout.addWidget(self.imagem)
         
+        
+        "Bot"
+        self.albertoBot = funcoesBot.Bot()            
         "Botoes"
-
         #Iniciar
+        self.processo1 = threading.Thread(target = self.botaoIniciarAlberto)
         self.botaoIniciar = QPushButton("Iniciar")
         self.layout.addWidget(self.botaoIniciar)
-        self.botaoIniciar.clicked.connect(self.botaoIniciarAlberto)
+        self.botaoIniciar.clicked.connect(self.Processo1)
 
         #EnviarMensagemInicial
+        self.processo2 = threading.Thread(target= self.enviarMensagemInicial)
         self.botaoMensagemInicial = QPushButton("Iniciar Mensagem")
         self.layout.addWidget(self.botaoMensagemInicial)
-        self.botaoMensagemInicial.clicked.connect(self.enviarMensagemInicial)
+        self.botaoMensagemInicial.clicked.connect(self.Processo2)
         
         ### Finalizar o Bot
+        self.processo3 = threading.Thread(target= self.fecharAlberto)
         self.botaoFim = QPushButton("Finalizar")
         self.layout.addWidget(self.botaoFim)
-        self.botaoFim.clicked.connect(self.fecharAlberto)
+        self.botaoFim.clicked.connect(self.Processo3)
         
-        self.texto.setAlignment(Qt.Alignment.AlignHCenter | Qt.Alignment.AlignTop)
         #Abrir Interface
         self.setCentralWidget(self.interface)
-
+        
+        
+    def Processo1 (self):
+        self.processo1.start()
+    def Processo2 (self):
+        self.processo2.start()
+    def Processo3 (self):
+        self.processo3.start()        
 
     def botaoIniciarAlberto(self):
         self.botaoIniciar.setDisabled(True)
-        self.albertoBot = funcoesBot.Bot()
+        
         self.albertoBot.acessarWhatsapp()
         sleep(10)
 
     def fecharAlberto(self):
         self.botaoFim.setDisabled(True)
+        print('k')
         self.albertoBot.FinalizarBot() 
         self.close()     
           
@@ -97,83 +113,6 @@ class programaAlberto (QMainWindow):
             self.albertoBot.MensagemInicial(i,(f'Olá, tudo bem? {i} ',':happy'+"\n"))
             self.albertoBot.procuraMensagemEEnviarMensagem()
             
-
-        """
-        self.widget = QComboBox()
-        self.layout.addWidget(self.widget)
-        self.widget.addItems(["Bastão", "Manga", "Volvo", "Joseph"])
-        self.widget.currentIndexChanged.connect( self.index_changed)
-        # There is an alternate signal to send the text.
-        self.widget.currentTextChanged.connect(self.text_changed)
-        self.widget.setEditable(True)
-        self.setCentralWidget(self.interface)
-    def index_changed(self,i):
-            print(i)
-    def text_changed(self,s):
-            print(s)
-
-
-    
-       
-        self.texto = QLabel("Olá, este é o Alberto Bot, marque o que você quer fazer!")
-        self.imagem = QLabel("Olá, este é o Alberto Bot, escreva o que você quer fazer!")
-        
-        self.texto.setScaledContents(True)
-        self.layout.addWidget(self.texto)
-        self.layout.addWidget(self.imagem)
-        font = self.interface.font()
-        font.setPointSize(14)
-        self.interface.setFont(font)
-        self.texto.setAlignment(Qt.Alignment.AlignHCenter | Qt.Alignment.AlignTop)
-        self.imagem.setAlignment(Qt.Alignment.AlignHCenter)
-        self.setCentralWidget(self.interface)
-
-        
-        self.interface = QWidget()
-        self.layout = QlayoutLayout(self.interface)
-        self.botao = QPushButton('Mandar mensagens para várias pessoas')
-        self.layout.addWidget(self.botao, 0, 0, 0 , 1)
-        self.botao1 = QPushButton('Mandar Arquivo')
-        self.layout.addWidget(self.botao1,0 , 1, 0 , 1)
-        self.botao.clicked.connect(lambda: print('Olá Mundo'))
-        self.setCentralWidget(self.interface)
-        
-        self.interface = QWidget()
-        self.layout = QlayoutLayout(self.interface)
-
-        
-        #Botoes
-        self.mandarMensagem = QPushButton("Mandar Mensagem")
-        
-        
-        #Signals - Meio que mostram mensagens na tela
-        self.mandarMensagem.setCheckable(True)
-        self.mandarMensagem.clicked.connect(self.botaofoiclicado)
-        self.mandarMensagem.clicked.connect(self.verSeObotaoFoiClicado)
-        self.enviarPdf = QPushButton("Enviar pdf")       
-        self.layout.addWidget(self.mandarMensagem, 0, 0, 0 , 1)
-        self.layout.addWidget(self.enviarPdf, 0, 1, 0 , 1)
-        self.setCentralWidget(self.interface)
-
-        def botaofoiclicado(self):
-        self.mandarMensagem.setText("Carregando...")
-        self.mandarMensagem.setEnabled(False)
-        self.label = QLabel()
-        self.input = QLineEdit()
-        self.input.textChanged.connect(self.label.setText)
-        
-        layout = QVBoxLayout()
-        layout.addWidget(self.input)
-        layout.addWidget(self.label)
-
-        container = QWidget()
-        container.setLayout(layout)
-
-        # Set the central texto of the Window.
-        self.setCentralWidget(container)
-        def verSeObotaoFoiClicado(self, checked):
-        print("Você clicou?",checked)    
-    """
         
         
 if __name__ == '__main__':
