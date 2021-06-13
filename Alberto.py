@@ -105,13 +105,14 @@ class programaAlberto (QMainWindow):
           
     def enviarMensagemInicial(self):
          #Envia mensagens iniciais para esses usuarios
-        lista = ["Nauane Linhares", "Bastão"] #Cuidado, depende do nome que o usuário está no whatsapp
-        for i in lista:
-            self.albertoBot.jaRespondeu = 0
-            self.albertoBot.ProcuraUsuario(i)
+        while True:
+            self.albertoBot.mensagemNaoLida()
 
-            self.albertoBot.MensagemInicial(i,(f'Olá, tudo bem? {i} ',':happy'+"\n"))
-            self.albertoBot.procuraMensagemEEnviarMensagem()
+            self.albertoBot.identificarMensagem()
+
+            self.albertoBot.grupoEspera()
+
+            sleep(3)
             
         
         
@@ -119,7 +120,8 @@ if __name__ == '__main__':
     programaIniciar = QApplication(sys.argv)
     programaIniciar.setStyle("Fusion")
     programa = programaAlberto()
-    programa.show()
+    programa.show()    
     programaIniciar.exec()
+    
 
 
