@@ -51,7 +51,7 @@ class programaAlberto (QMainWindow):
         self.imagem.setPixmap(QPixmap("alberto.jpg"))
         self.imagem.setFixedSize(QSize(320,240))
         self.imagem.setScaledContents(True)
-        self.imagem.setAlignment(Qt.Alignment.AlignCenter)
+      #  self.imagem.setAlignment(Qt.Alignment.AlignCenter)
         self.layout.addWidget(self.imagem)
         
         "Botoes"
@@ -84,14 +84,19 @@ class programaAlberto (QMainWindow):
 
     def fecharAlberto(self):
         self.botaoFim.setDisabled(True)
-        self.albertoBot.FinalizarBot() 
-        self.close()     
+        self.albertoBot.FinalizarBot()
+        self.close()
           
     def enviarMensagemInicial(self):
          #Envia mensagens iniciais para esses usuarios
-
         while True:
             self.albertoBot.mensagemNaoLida()
+
+            self.albertoBot.identificarMensagem()
+
+            self.albertoBot.grupoEspera()
+
+            sleep(3)
             
      #   inicio = time.time()
      #   fim = time.time()

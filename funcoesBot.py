@@ -36,13 +36,10 @@ class Bot:
             sleep(2)
             notificacao[0].click()
             sleep(2)
-            # responder com base na mensagem não lida
-            # self.MensagemInicial('Olá, tudo bem?',':happy'+"\n")
-            sleep(2)
+            #self.albertoBot.identificarMensagem()
 
         except:
-            #função entrar no grupo fixo
-            sleep(10)
+            sleep(3)
 
     """Procura um usuario com base no seu nome na barra de pesquisa e acessa caso ache o usuario (Poderia ser um numero também"""
 
@@ -60,7 +57,7 @@ class Bot:
 
     """Envia uma mensagem inicial ao usuário"""
 
-    def MensagemInicial(self, usuario, texto):
+    def MensagemInicial(self, texto):
 
         # Acessa a barra de texto (região onde vou mandar a mensagem)
         barraDeTexto = self.chrome.find_elements_by_xpath(
@@ -81,6 +78,59 @@ class Bot:
             "//span[@data-icon='send']")
         mandarMensagem.click()
     """Manda mensagem conforme resposta do usuario"""
+
+    def grupoEspera(self):
+        grupos = self.chrome.find_elements_by_xpath(
+            "//span[@data-icon='pinned']")
+        for grupo in grupos:
+            grupo.click()
+            sleep(2)
+
+
+    def identificarMensagem(self):
+
+        # Dorme por 5 segundos
+        sleep(3)
+
+        # Procura as mensagens do contato
+        try:
+            mensagem = self.chrome.find_elements_by_xpath(
+                '//div[contains(@class,"GDTQm message-in focusable-list-item")]')
+
+            # Perceba que mensagem é um vetor, pois há várias mensagens, nesse caso vou acessar a última mensagem, o último termo do vetor
+            # Lembrando que o vetor começa sempre no zero, então pegamos o total de mensagens e diminuimos de 1.
+            texto = mensagem[len(mensagem)-1]
+
+            # Acessa o conteúdo da mensagem
+            procurandoElemento = texto.find_elements_by_class_name("_3-8er")
+
+            conteudoTexto = procurandoElemento[len(procurandoElemento)-1].text
+
+          #  print(f'{conteudoTexto}')
+            # Acessa a barra de texto (região onde vou mandar a mensagem)
+            barraDeTexto = self.chrome.find_elements_by_xpath(
+                '//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
+
+            if conteudoTexto.isdigit():
+                mensagemASerEnviada = sheetsBot.pegarMensagem(conteudoTexto)
+                barraDeTexto[1].click()
+                for message in mensagemASerEnviada:
+                    barraDeTexto[1].send_keys(message)
+                mandarMensagem = self.chrome.find_element_by_xpath(
+                    "//span[@data-icon='send']")
+                mandarMensagem.click()
+            else:
+                mensagemASerEnviada = sheetsBot.mensagemErro()
+                barraDeTexto[1].click()
+                for message in mensagemASerEnviada:
+                    barraDeTexto[1].send_keys(message)
+                mandarMensagem = self.chrome.find_element_by_xpath(
+                    "//span[@data-icon='send']")
+                mandarMensagem.click()
+        
+        except:
+            pass
+
 
     def procuraMensagemEEnviarMensagem(self):
 
@@ -120,7 +170,7 @@ class Bot:
             self.mensagemSalva = conteudoTexto
             self.enviarMensagem()
             # self.enviarFigurinha()
-            self.enviaImagem(r"C:\Users\Nauvo\Downloads\mamaco.jpeg")
+            # self.enviaImagem(r"C:\Users\Nauvo\Downloads\mamaco.jpeg")
             self.procuraMensagemEEnviarMensagem()
 
         elif conteudoTexto.lower() == "continuar" and self.jaRespondeu != 0:
