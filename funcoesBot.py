@@ -93,7 +93,7 @@ class Bot:
 
         # Procura as mensagens do contato
         try:
-            print("teste1")
+         
             mensagem = self.chrome.find_elements_by_xpath(
                 '//div[contains(@class,"GDTQm message-in focusable-list-item")]')
 
@@ -109,8 +109,11 @@ class Bot:
             # Acessa a barra de texto (região onde vou mandar a mensagem)
             barraDeTexto = self.chrome.find_elements_by_xpath(
                 '//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
+            print(conteudoTexto)
             if conteudoTexto.isdigit():
-                mensagemASerEnviada = sheetsBot.pegarMensagem(int(conteudoTexto))
+                print("teste1")
+                mensagemASerEnviada = sheetsBot.pegarMensagemNumero(int(conteudoTexto))
+                print("teste2")
                 barraDeTexto[1].click()
                 for message in mensagemASerEnviada:
                     barraDeTexto[1].send_keys(message)
@@ -118,7 +121,7 @@ class Bot:
                     "//span[@data-icon='send']")
                 mandarMensagem.click()
             else:
-                mensagemASerEnviada = sheetsBot.mensagemErro()
+                mensagemASerEnviada = sheetsBot.pegarMensagemTexto(conteudoTexto)
                 barraDeTexto[1].click()
                 for message in mensagemASerEnviada:
                     barraDeTexto[1].send_keys(message)

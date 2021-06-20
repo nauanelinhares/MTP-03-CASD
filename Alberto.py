@@ -82,7 +82,7 @@ class programaAlberto (QMainWindow):
             self.onoff.setChecked(True)
    
         else:
-            print("k")
+          
             self.booleana = 0
             self.processoAtivarMensagem.join()
             self.onoff.setChecked(False)
@@ -133,7 +133,7 @@ class programaAlberto (QMainWindow):
                 sleep(1)
             self.albertoBot.grupoEspera()
             sleep(1)
-        print("fim")
+    
             
         
         
