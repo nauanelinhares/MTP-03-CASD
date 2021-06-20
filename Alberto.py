@@ -1,9 +1,10 @@
 import sys
 from time import sleep
 import time
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5 import uic
 import funcoesBot
 import os
 import threading
@@ -28,6 +29,8 @@ Antes de rodar o código:
 class programaAlberto (QMainWindow):
     def __init__ (self):
         super().__init__()
+        uic.loadUi('AlbertoUI.ui', self)
+
         
         "Processos"
         
@@ -40,72 +43,89 @@ class programaAlberto (QMainWindow):
         
         "Titulo da Interface"
         self.setWindowTitle("Alberto Bot")
-        "Nossa interface"
-        self.interface = QWidget()
-        self.layout = QVBoxLayout(self.interface)
-        #Mensagem
-        self.texto = QLabel("Olá, eu sou Alberto Bot, selecione o que você quer fazer!")
-        self.layout.addWidget(self.texto)
-        #Fonte do texto
-        font = self.texto.font()
-        font.setPointSize(14)
-        self.texto.setFont(font)
-        #Imagem
-        self.imagem = QLabel()
-        self.imagem.setPixmap(QPixmap("alberto.jpg"))
-        self.imagem.setFixedSize(QSize(320,240))
-        self.imagem.setScaledContents(True)
-#        self.imagem.setAlignment(Qt.Alignment.AlignCenter)
-        self.layout.addWidget(self.imagem)
-        
-        
+        self.setWindowIcon(QIcon('alberto.ico'))
+
         "Bot"
         self.albertoBot = funcoesBot.Bot()            
         "Botoes"
         #Iniciar
-        self.processo1 = threading.Thread(target = self.botaoIniciarAlberto)
-        self.botaoIniciar = QPushButton("Iniciar")
-        self.layout.addWidget(self.botaoIniciar)
-        self.botaoIniciar.clicked.connect(self.Processo1)
+        
+        self.botaoIniciar.clicked.connect(self.ProcessoIniciar)
 
         #EnviarMensagemInicial
-        self.processo2 = threading.Thread(target= self.enviarMensagemInicial)
-        self.botaoMensagemInicial = QPushButton("Iniciar Mensagem")
-        self.layout.addWidget(self.botaoMensagemInicial)
-        self.botaoMensagemInicial.clicked.connect(self.Processo2)
-        
+        self.processoAtivarMensagem = None
+        self.botaoMensagemInicial.setCheckable(True)
+        self.botaoMensagemInicial.clicked.connect(self.ProcessoAtivarMensagem)
+        self.booleana = 0
         ### Finalizar o Bot
-        self.processo3 = threading.Thread(target= self.fecharAlberto)
-        self.botaoFim = QPushButton("Finalizar")
-        self.layout.addWidget(self.botaoFim)
-        self.botaoFim.clicked.connect(self.Processo3)
         
-        #Abrir Interface
-        self.setCentralWidget(self.interface)
+        self.botaoFim.clicked.connect(self.ProcessoFinalizarBot)
+        self.botao = QPushButton("Iniciar") 
+    
+        #onoff
         
         
-    def Processo1 (self):
-        self.processo1.start()
-    def Processo2 (self):
-        self.processo2.start()
-    def Processo3 (self):
-        self.processo3.start()        
+
+
+        
+        
+    def ProcessoIniciar (self):
+        #Inicia
+        self.processoIniciar = threading.Thread(target = self.botaoIniciarAlberto)
+        self.processoIniciar.start()
+
+    def ProcessoAtivarMensagem (self,checked):
+        if checked:
+            self.processoAtivarMensagem = threading.Thread(target= self.enviarMensagemInicial)
+            self.booleana = 1
+            self.processoAtivarMensagem.start()
+            self.onoff.setChecked(True)
+   
+        else:
+            print("k")
+            self.booleana = 0
+            self.processoAtivarMensagem.join()
+            self.onoff.setChecked(False)
+   
+
+            
+
+    def ProcessoFinalizarBot (self):
+        self.processoFinalizarBot = threading.Thread(target= self.fecharAlberto)
+        self.processoFinalizarBot.start()   
+
+
 
     def botaoIniciarAlberto(self):
         self.botaoIniciar.setDisabled(True)
-        
+        self.botaoIniciar.setStyleSheet(
+                    """QPushButton {
+                    color: #333;
+                    border: 2px solid #555;
+                    border-radius: 20px;
+                    border-style: outset;
+                    background: qradialgradient(
+                        cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4,
+                        radius: 1.35, stop: 0 #fff, stop: 1 #888
+                        );
+                    padding: 5px;
+                    font: 20pt "Lobster 1.4";
+                    color: rgb(255,255,255);
+                    background-color: rgb(194, 194, 194);
+                    
+                    }
+                    }""")
         self.albertoBot.acessarWhatsapp()
         sleep(10)
 
     def fecharAlberto(self):
         self.botaoFim.setDisabled(True)
-        print('k')
         self.albertoBot.FinalizarBot() 
         self.close()     
           
     def enviarMensagemInicial(self):
         # Envia mensagens iniciais para esses usuarios
-        while True:
+        while self.booleana:
             boolean = self.albertoBot.mensagemNaoLida()
             sleep(1)
             if boolean == 1:
@@ -113,6 +133,7 @@ class programaAlberto (QMainWindow):
                 sleep(1)
             self.albertoBot.grupoEspera()
             sleep(1)
+        print("fim")
             
         
         
