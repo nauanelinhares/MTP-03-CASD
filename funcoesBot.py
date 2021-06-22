@@ -126,6 +126,9 @@ class Bot:
             '//span[@data-icon="send"]')
         send_button.click()
 
+    "Envia uma figurinha ao usuário"
+
+    # Adicionar http://sticker.ly/s/DWIY60 no Whatsapp Business
     def enviarFigurinha(self):
         emoji_section = self.chrome.find_element_by_xpath(
             '//*[@id="main"]/footer/div[1]/div[1]/div[1]/button[2]/span'
