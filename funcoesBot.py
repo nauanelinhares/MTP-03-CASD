@@ -109,11 +109,8 @@ class Bot:
             # Acessa a barra de texto (região onde vou mandar a mensagem)
             barraDeTexto = self.chrome.find_elements_by_xpath(
                 '//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
-            print(conteudoTexto)
             if conteudoTexto.isdigit():
-                print("teste1")
                 mensagemASerEnviada = sheetsBot.pegarMensagemNumero(int(conteudoTexto))
-                print("teste2")
                 barraDeTexto[1].click()
                 for message in mensagemASerEnviada:
                     barraDeTexto[1].send_keys(message)

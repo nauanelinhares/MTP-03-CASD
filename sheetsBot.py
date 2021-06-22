@@ -12,18 +12,15 @@ df = pd.DataFrame(sheet.get_all_records(head = 3))
 df.set_index("Nros.", inplace = True)
 
 def pegarMensagemNumero(i):
-    print('numero',i)
     numero = i
     
     try:
         texto = pd.DataFrame(df.loc[[numero], 'Mensagens']).iloc[0,0]
-        print("kkkkkkkkkkkkkkkkkk")
     except:
         texto = sheet.acell("C2").value
     #print(texto)
     textos = texto.split("\n")
     mensagem = [x +Keys.SHIFT + Keys.ENTER for x in textos]
-    print("fim")
     return mensagem
 def pegarMensagemTexto(mensagem):
     
