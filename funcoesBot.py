@@ -22,11 +22,13 @@ class Bot:
         self.usuarioAtual = None  # O usuario para o qual o bot está conectado
 
     """Acessa um site, no caso do Alberto Bot, padroniza-se o whatsapp"""
+
     def acessarWhatsapp(self):
         # Acessa um site, no caso o site do whatsapp
         self.chrome.get('https://web.whatsapp.com/')
 
     """Procura mensagens não lidas"""
+
     def mensagemNaoLida(self):
         try:
             notificacao = self.chrome.find_elements_by_class_name('_38M1B')
@@ -36,6 +38,7 @@ class Bot:
             return 0
 
     """Envia uma mensagem inicial ao usuário"""
+
     def MensagemInicial(self, texto):
         # Acessa a barra de texto (região onde vou mandar a mensagem)
         barraDeTexto = self.chrome.find_elements_by_xpath(
@@ -57,6 +60,7 @@ class Bot:
         mandarMensagem.click()
 
     """Direciona o Bot para um grupo de espera"""
+
     def grupoEspera(self):
         grupos = self.chrome.find_elements_by_xpath(
             "//span[@data-icon='pinned']")
@@ -65,11 +69,12 @@ class Bot:
             sleep(1)
 
     """Identifica a mensagem do usuário e responde conforme seu conteúdo"""
+
     def identificarMensagem(self):
         # Dorme por 5 segundos
         sleep(1)
         # Procura as mensagens do contato
-        try:         
+        try:
             mensagem = self.chrome.find_elements_by_xpath(
                 '//div[contains(@class,"GDTQm message-in focusable-list-item")]')
             # Perceba que mensagem é um vetor, pois há várias mensagens, nesse caso vou acessar a última mensagem, o último termo do vetor
@@ -78,41 +83,37 @@ class Bot:
             # Acessa o conteúdo da mensagem
             procurandoElemento = texto.find_elements_by_class_name("_3-8er")
             conteudoTexto = procurandoElemento[len(procurandoElemento)-1].text
-            # Acessa a barra de texto (região onde vou mandar a mensagem)
-            barraDeTexto = self.chrome.find_elements_by_xpath(
-                '//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
-            if conteudoTexto.isdigit():
-                mensagemASerEnviada = sheetsBot.pegarMensagemNumero(int(conteudoTexto))
-                barraDeTexto[1].click()
-                for message in mensagemASerEnviada:
-                    barraDeTexto[1].send_keys(message)
-                mandarMensagem = self.chrome.find_element_by_xpath(
-                    "//span[@data-icon='send']")
-                mandarMensagem.click()
+
+            # Figurinha (Sem dúvidas)
+            if int(conteudoTexto) == 9:
+                self.enviarFigurinha()
             else:
-                mensagemASerEnviada = sheetsBot.pegarMensagemTexto(conteudoTexto)
-                barraDeTexto[1].click()
-                for message in mensagemASerEnviada:
-                    barraDeTexto[1].send_keys(message)
-                mandarMensagem = self.chrome.find_element_by_xpath(
-                    "//span[@data-icon='send']")
-                mandarMensagem.click()        
+                # Acessa a barra de texto (região onde vou mandar a mensagem)
+                barraDeTexto = self.chrome.find_elements_by_xpath(
+                    '//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
+                if conteudoTexto.isdigit():
+                    mensagemASerEnviada = sheetsBot.pegarMensagemNumero(
+                        int(conteudoTexto))
+                    barraDeTexto[1].click()
+                    for message in mensagemASerEnviada:
+                        barraDeTexto[1].send_keys(message)
+                    mandarMensagem = self.chrome.find_element_by_xpath(
+                        "//span[@data-icon='send']")
+                    mandarMensagem.click()
+                else:
+                    mensagemASerEnviada = sheetsBot.pegarMensagemTexto(
+                        conteudoTexto)
+                    barraDeTexto[1].click()
+                    for message in mensagemASerEnviada:
+                        barraDeTexto[1].send_keys(message)
+                    mandarMensagem = self.chrome.find_element_by_xpath(
+                        "//span[@data-icon='send']")
+                    mandarMensagem.click()
         except:
-            pass         
-            
-    """Envia uma mensagem padrão para um usuário"""
-    def enviarMensagem(self):
-        sleep(5)
-        barraDeTexto = self.chrome.find_elements_by_xpath(
-            '//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
-        barraDeTexto[1].click()
-        barraDeTexto[1].send_keys(
-            'Obrigado! #BORACASD \n Para novas informações digite "Continuar" ')
-        mandarMensagem = self.chrome.find_element_by_xpath(
-            "//span[@data-icon='send']")
-        mandarMensagem.click()
+            pass
 
     "Envia uma imagem ao usuário"
+
     def enviaImagem(self, caminho_Imagem):
 
         attachment_section = self.chrome.find_element_by_class_name("_2C9f1")
@@ -147,6 +148,6 @@ class Bot:
         figurinha.click()
 
     """ Encerra o bot"""
+
     def FinalizarBot(self):
         self.chrome.quit()
-        
