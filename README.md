@@ -2,8 +2,6 @@
 
 # Alberto BOT
 
-
-
 :robot: Robô do whatsapp utilizado para receber e enviar mensagens personalizadas para o usuário
 
 ## Objetivo
@@ -12,17 +10,18 @@ Facilitar e diminuir o trabalho dos voluntários do CASD, principalmente no fina
 
 ## ⚠️ Como Utilizar
 
-Para utilizar o **Alberto Bot** você irá precisar: 
+Para utilizar o **Alberto Bot** você irá precisar:
 
-* Python instalado no seu PC, juntamente com uma IDE ou editor de textos como o VScode ou Pycharm
-* Instalar algumas bibliotecas para o python como:
-  * Selenium
-  * Pandas
-  * gspread
-  * oauth2client
-  
+- Python instalado no seu PC, juntamente com uma IDE ou editor de textos como o VScode ou Pycharm
+- Instalar algumas bibliotecas para o python como:
+
+  - Selenium
+  - Pandas
+  - PyQt5
+  - gspread
+  - oauth2client
+
   Obs: Para instalar essa bibliotecas, basta abrir o promt de comando e escrever "pip install {biblioteca}". Exemplo: pip install selenium
-
 
 ## Funções do Alberto Bot
 
@@ -30,16 +29,15 @@ Para utilizar o **Alberto Bot** você irá precisar:
 
 ### Enviar Mensagem personalizadas
 
-* Personalizar mensagens enviando emoctions
+- Personalizar mensagens enviando emoctions
 
-   >Para utilizar os emoctions você deve utilizar o site [Emoctions](https://unicode-table.com/pt/emoji/)!
-  
-   >Na área de escrever a mensagem, para enviar um emoction você deve pegar o número do emoction e escrever u'\u"numeroDoEmoction'
-   
-   >Exemplo: mensagem.send_keys('Você transformou 10 vidas! Muito obrigado u'\u2764'!) # Onde 2764 representa o emoction do coração.
+  > Para utilizar os emoctions você deve utilizar o site [Emoctions](https://unicode-table.com/pt/emoji/)!
+
+  > Na área de escrever a mensagem, para enviar um emoction você deve pegar o número do emoction e escrever u'\u"numeroDoEmoction'
+
+  > Exemplo: mensagem.send_keys('Você transformou 10 vidas! Muito obrigado u'\u2764'!) # Onde 2764 representa o emoction do coração.
 
 ### Enviar Mensagem com base na resposta do Usuário
-
 
 ## 🦄 Autores
 
@@ -85,7 +83,13 @@ Para utilizar o **Alberto Bot** você irá precisar:
         </sub>
       </a>
     </td>
+    <td align="center">
+      <a href="#">
+        <img src="https://pps.whatsapp.net/v/t61.24694-24/160115816_492271362224538_5753197858338450372_n.jpg?ccb=11-4&oh=680ac810a4743655457c9c0e6743c19f&oe=60B2A41A" width="100px;" alt="Emmanuel Dias"/><br>
+        <sub>
+          <b>Mateus Borges (Príncipe - T24) </b>
+        </sub>
+      </a>
+    </td>
   </tr>
 </table>
-
-
