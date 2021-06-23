@@ -83,31 +83,29 @@ class Bot:
             # Acessa o conteúdo da mensagem
             procurandoElemento = texto.find_elements_by_class_name("_3-8er")
             conteudoTexto = procurandoElemento[len(procurandoElemento)-1].text
-
+            print(conteudoTexto)
             # Figurinha (Sem dúvidas)
-            if int(conteudoTexto) == 9:
+            if conteudoTexto == "9":
                 self.enviarFigurinha()
+            
             else:
+
                 # Acessa a barra de texto (região onde vou mandar a mensagem)
-                barraDeTexto = self.chrome.find_elements_by_xpath(
-                    '//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
+                barraDeTexto = self.chrome.find_elements_by_xpath('//div[contains(@class,"_2_1wd copyable-text selectable-text")]')
                 if conteudoTexto.isdigit():
-                    mensagemASerEnviada = sheetsBot.pegarMensagemNumero(
-                        int(conteudoTexto))
+                    mensagemASerEnviada = sheetsBot.pegarMensagemNumero(int(conteudoTexto))
                     barraDeTexto[1].click()
                     for message in mensagemASerEnviada:
                         barraDeTexto[1].send_keys(message)
-                    mandarMensagem = self.chrome.find_element_by_xpath(
-                        "//span[@data-icon='send']")
+                    mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                     mandarMensagem.click()
                 else:
-                    mensagemASerEnviada = sheetsBot.pegarMensagemTexto(
-                        conteudoTexto)
+                    print(conteudoTexto)
+                    mensagemASerEnviada = sheetsBot.pegarMensagemTexto(conteudoTexto)
                     barraDeTexto[1].click()
                     for message in mensagemASerEnviada:
                         barraDeTexto[1].send_keys(message)
-                    mandarMensagem = self.chrome.find_element_by_xpath(
-                        "//span[@data-icon='send']")
+                    mandarMensagem = self.chrome.find_element_by_xpath("//span[@data-icon='send']")
                     mandarMensagem.click()
         except:
             pass
@@ -144,7 +142,7 @@ class Bot:
             '//div[contains(@class,"YAIhH _1eeWL")]'
         )
         albertin_section[2].click()
-        sleep(2)
+        sleep(3)
         figurinha = self.chrome.find_element_by_xpath(
             '//*[@id="main"]/footer/div[2]/div/div[3]/div[1]/div/div[1]/div[2]/div/div[1]/div/span'
         )
