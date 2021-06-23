@@ -62,12 +62,7 @@ class programaAlberto (QMainWindow):
         self.botaoFim.clicked.connect(self.ProcessoFinalizarBot)
         self.botao = QPushButton("Iniciar") 
     
-        #onoff
-        
-        
-
-
-        
+        #onoff        
         
     def ProcessoIniciar (self):
         #Inicia
@@ -79,22 +74,15 @@ class programaAlberto (QMainWindow):
             self.processoAtivarMensagem = threading.Thread(target= self.enviarMensagemInicial)
             self.booleana = 1
             self.processoAtivarMensagem.start()
-            self.onoff.setChecked(True)
-   
-        else:
-          
+            self.onoff.setChecked(True)   
+        else:          
             self.booleana = 0
             self.processoAtivarMensagem.join()
             self.onoff.setChecked(False)
-   
-
-            
 
     def ProcessoFinalizarBot (self):
         self.processoFinalizarBot = threading.Thread(target= self.fecharAlberto)
-        self.processoFinalizarBot.start()   
-
-
+        self.processoFinalizarBot.start()
 
     def botaoIniciarAlberto(self):
         self.botaoIniciar.setDisabled(True)
@@ -124,7 +112,7 @@ class programaAlberto (QMainWindow):
         self.close()     
           
     def enviarMensagemInicial(self):
-        # Envia mensagens iniciais para esses usuarios
+        # Loop principal
         while self.booleana:
             boolean = self.albertoBot.mensagemNaoLida()
             sleep(1)
@@ -132,10 +120,7 @@ class programaAlberto (QMainWindow):
                 self.albertoBot.identificarMensagem()
                 sleep(1)
             self.albertoBot.grupoEspera()
-            sleep(1)
-    
-            
-        
+            sleep(1)       
         
 if __name__ == '__main__':
     programaIniciar = QApplication(sys.argv)

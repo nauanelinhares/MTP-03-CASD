@@ -13,8 +13,8 @@ df.set_index("Nros.", inplace = True)
 
 """Retorna a mensagem de resposta com base em um número"""
 def pegarMensagemNumero(i):
-    numero = i
-    
+    print('numero',i)
+    numero = i    
     try:
         texto = pd.DataFrame(df.loc[[numero], 'Mensagens']).iloc[0,0]
     except:
