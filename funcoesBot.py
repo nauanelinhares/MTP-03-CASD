@@ -83,7 +83,6 @@ class Bot:
             # Acessa o conteúdo da mensagem
             procurandoElemento = texto.find_elements_by_class_name("_3-8er")
             conteudoTexto = procurandoElemento[len(procurandoElemento)-1].text
-            print(conteudoTexto)
             # Figurinha (Sem dúvidas)
             if conteudoTexto == "9":
                 self.enviarFigurinha()
