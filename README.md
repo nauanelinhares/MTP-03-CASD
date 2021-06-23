@@ -1,4 +1,4 @@
-![Alberto BOT](https://raw.githubusercontent.com/nauvoador/MTP-03-CASD/main/158591338_487302005761129_355164802960415134_n.jpg)
+![Alberto BOT](https://raw.githubusercontent.com/nauvoador/MTP-03-CASD/main/Alberto%20Ok.png)
 
 # Alberto BOT
 
